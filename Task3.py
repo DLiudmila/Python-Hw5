@@ -8,18 +8,11 @@ lst = f1.readline()
 f1.close()
 
 
-res = ''
-i = 0
-while i < len(lst):
-    count = 1
-    while (i+1) < len(lst) and lst[i] == lst[i+1]:
-        count+= 1
-        i+= 1
-        tmpStr = str(count) + lst[i]
-    i+=1
-    res+=tmpStr
+list1 = [i for i in range(0, len(lst)) if (lst[i] != lst[i-1] or i == len(lst)-1) or i == 0]
+resList = ([str(list1[x] - list1[x-1])+lst[list1[x-1]] for x in range(1, len(list1))])
 f2 = open('FileRLE_2.txt', 'w')
-f2.writelines(res)
+for item in resList:
+    f2.write(item)
 f2.close()
 
 
@@ -28,14 +21,7 @@ t1 = open(path_1, 'r')
 lSt = t1.readline()
 t1.close()
 
-number = ''
-res = ''
-for i in range(len(lSt)):
-    if not lSt[i].isalpha():
-        number += lSt[i]
-    else:
-        res = res + lSt[i] * int(number)
-        number = ''
+list2 = [(lSt[k], lSt[k+1]) for k in range(len(lSt)) if k%2 == 0]
 t2 = open('FileRLE_4.txt', 'w')
-t2.writelines(res)
+x = list(map(lambda tup: t2.write(tup[1]*int(tup[0])), list2))
 t2.close()
